@@ -3360,10 +3360,11 @@ Governance metadata is intended to be machine-actionable: it should enable downs
   including the `AND`, `OR`, and `WITH` operators, the `+` operator, and `LicenseRef-` / `DocumentRef-`
   identifiers for licenses not on the SPDX License List.
   The `spdx` attribute is the authoritative machine-readable value when present.
-  A `<license>` MAY additionally carry an `href` attribute pointing to the license text (recommended for
-  `LicenseRef-` identifiers) and MAY include a human-readable label as element content.
-  For backwards compatibility, a `<license>` whose element content is a URL and which carries no `spdx`
-  attribute remains valid; new producers SHOULD prefer the `spdx` attribute.
+  A `<license>` MAY include a human-readable label as element content.
+  A `<license>` whose `spdx` value uses a `LicenseRef-` (or `DocumentRef-`) identifier MUST also carry an
+  `href` attribute resolving to the license text, since such identifiers are not resolvable through the
+  SPDX License List; conversely, `<license>` entries identified by a listed SPDX identifier SHOULD NOT
+  carry an `href`, as the SPDX identifier is already the canonical reference.
 
   A `<license>` MAY carry a `for` attribute whose value is a whitespace-separated list of identifiers of
   components in the document body (e.g. an embedded image, table, or section). When `for` is omitted,
@@ -3396,15 +3397,11 @@ Governance metadata is intended to be machine-actionable: it should enable downs
     <!-- document-wide license -->
     <license spdx="Apache-2.0 OR MIT"/>
 
-    <!-- per-component overrides -->
-    <license spdx="CC-BY-4.0"
-             href="https://creativecommons.org/licenses/by/4.0/"
-             for="fig-architecture"/>
-    <license spdx="CC-BY-SA-3.0"
-             href="https://creativecommons.org/licenses/by-sa/3.0/"
-             for="img-logo img-screenshot-1"/>
+    <!-- per-component overrides (SPDX-identified, no href needed) -->
+    <license spdx="CC-BY-4.0" for="fig-architecture"/>
+    <license spdx="CC-BY-SA-3.0" for="img-logo img-screenshot-1"/>
 
-    <!-- custom / internal license, referenced by its own identifier -->
+    <!-- custom / internal license: not on the SPDX License List, so href is required -->
     <license spdx="LicenseRef-AcmeInternal-1.0"
              href="https://acme.example/licenses/internal-1.0.txt"
              for="appendix-a"/>
@@ -3609,7 +3606,7 @@ Example use of the governance and compliance elements is shown below:
     <generated_by>example_vlm_org/example_vlm_name</generated_by>
 
     <licenses>
-      <license spdx="Apache-2.0" href="https://www.apache.org/licenses/LICENSE-2.0"/>
+      <license spdx="Apache-2.0"/>
     </licenses>
 
     <data_classification>
@@ -3678,7 +3675,7 @@ Implementations MAY choose to interpret these as organization-wide defaults for 
 
     <!-- licensing / classification / compliance (existing governance elements) -->
     <licenses>
-      <license spdx="Apache-2.0" href="https://www.apache.org/licenses/LICENSE-2.0"/>
+      <license spdx="Apache-2.0"/>
     </licenses>
 
     <data_classification>

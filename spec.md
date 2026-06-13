@@ -3413,6 +3413,18 @@ Governance metadata is intended to be machine-actionable: it should enable downs
   </licenses>
   ```
 
+  The referenced components carry matching `xml:id` values in the document body, e.g.:
+
+  ```xml
+  <picture xml:id="img-logo">
+    <label value="logo"/>
+    <src uri="https://example.com/acme-logo.svg"/>
+  </picture>
+  ```
+
+  Here the document-wide `Apache-2.0 OR MIT` license does not apply to `img-logo`; the
+  `<license spdx="CC-BY-SA-3.0" for="img-logo img-screenshot-1"/>` entry above governs it instead.
+
 ###### Data classification and privacy posture
 
 - `data_classification` One or more data classifications can be given for the document content.

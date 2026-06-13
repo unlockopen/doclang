@@ -3373,6 +3373,11 @@ Governance metadata is intended to be machine-actionable: it should enable downs
   assets (e.g. an image under a different license) to be attributed correctly without changing the
   document-level license.
 
+  The `for` attribute is typed as XML [`IDREFS`](https://www.w3.org/TR/xml/#NT-TokenizedType), and the
+  components it points at are expected to carry [`xml:id`](https://www.w3.org/TR/xml-id/) attributes
+  whose values appear in the `for` list. Using the standard ID/IDREFS machinery means a validating
+  parser will reject dangling references and duplicate IDs without any vocabulary-specific logic.
+
   Scope and conflict resolution:
 
   - **Every `<license>` has exactly one scope.** Its scope is either the document as a whole
